@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+//@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/authentication/")
 public class UserController {
@@ -52,7 +53,6 @@ public class UserController {
                 student.setLastName(signupRequest.getLastName());
                 student.setDateOfBirth(signupRequest.getDateOfBirth());
                 student.setEmail(signupRequest.getEmail());
-                student.setPhoneNumber(signupRequest.getPhoneNumber());
                 student.setPassword(signupRequest.getPassword());
                 student.setLevelOfEducation(signupRequest.getLevelOfEducation());
                 student.setSchoolName(signupRequest.getSchoolName());
@@ -63,7 +63,6 @@ public class UserController {
                 professor.setLastName(signupRequest.getLastName());
                 professor.setDateOfBirth(signupRequest.getDateOfBirth());
                 professor.setEmail(signupRequest.getEmail());
-                professor.setPhoneNumber(signupRequest.getPhoneNumber());
                 professor.setPassword(signupRequest.getPassword());
                 professor.setCurrentPosition(signupRequest.getCurrentPosition());
                 professor.setExperienceYears(signupRequest.getExperienceYears());

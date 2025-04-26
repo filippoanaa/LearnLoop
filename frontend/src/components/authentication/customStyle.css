@@ -1,0 +1,42 @@
+.divider:after,
+.divider:before {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #eee; 
+}
+
+.h-custom {
+    height: calc(100% - 73px);
+}
+
+@media (max-width: 450px) {
+    .h-custom {
+        height: 100%;
+    }
+}
+
+
+.btn-primary {
+    background-color: #c69f89; 
+    color: #ffffff; 
+    border: none;
+    border-radius: 8px; 
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn-primary:hover {
+    background-color: #a87e6a; 
+}
+
+.bg-primary {
+    background-color: #c69f89 !important; /* Mocha-inspired background */
+    color: #ffffff !important; /* White text */
+    text-align: center; /* Aliniere centrală */
+    border-radius: 8px 8px 0 0; /* Colțuri rotunjite pentru compatibilitate cu cardul */
+    padding: 15px; /* Spațiu pentru un aspect mai aerisit */
+    font-size: 20px; /* Mărime font mai mare pentru titlu */
+}
+

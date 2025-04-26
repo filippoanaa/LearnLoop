@@ -18,19 +18,17 @@ public class User {
     private Date dateOfBirth;
     @Column(unique = true, nullable = false)
     private String email;
-    private String phoneNumber;
     private String password;
 
 
 
     public User() {}
 
-    public User(String firstName, String lastName, Date dateOfBirth, String email, String phoneNumber, String password) {
+    public User(String firstName, String lastName, Date dateOfBirth, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.email = email;
-        this.phoneNumber = phoneNumber;
         this.password = password;
     }
 
@@ -68,13 +66,6 @@ public class User {
         this.password = password;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
 
     public String getEmail() {
         return email;
@@ -92,5 +83,4 @@ public class User {
         this.dateOfBirth = dateOfBirth;
     }
 
-    //sa am gtija la poza de profil
 }
