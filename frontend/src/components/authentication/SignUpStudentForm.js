@@ -3,7 +3,7 @@ import { Alert, Container, Row, Col, Card, Form, Button } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom';
 import './customStyle.css'
 
-const SignupStudentForm = () => {
+const SignUpStudentForm = () => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [dateOfBirth, setDateOfBirth] = useState('');
@@ -50,8 +50,9 @@ const SignupStudentForm = () => {
                 body: JSON.stringify(studentData)
             });
     
-            if (response.ok) {
-                navigate('/login');
+            if (response.status == 201) {
+                const createdStudent = await response.json();
+                navigate(`/account/${createdStudent.id}`);
             } else {
                 const errorData = await response.json();
                 setError(errorData.message || 'Signup failed.');
@@ -181,4 +182,4 @@ const SignupStudentForm = () => {
     )
 }
 
-export default SignupStudentForm
+export default SignUpStudentForm

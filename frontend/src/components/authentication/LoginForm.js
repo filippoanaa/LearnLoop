@@ -18,43 +18,50 @@ export default function LoginForm() {
     const handleRoleSelection = (role) => {
         if (role === 'student') {
             navigate('/signup-student');
-        } else if (role === 'teacher') {
-            navigate('/signup-teacher');
+        } else if (role === 'professor') {
+            navigate('/signup-professor');
         }
     };
 
     const handleLogin = async (e) => {
-        e.preventDefault(); // Previne refresh-ul paginii
+        e.preventDefault(); 
         setError(''); 
-        if(!email || !password){
-            e.preventDefault();
+    
+        // Validare câmpuri goale
+        if (!email || !password) {
             setError('All fields must be completed.');
             return;
         }
-
-        const loginReuest = {email, password};
-        
-        try{
+    
+        const loginRequest = { email, password };
+    
+        try {
             const response = await fetch('http://localhost:8080/authentication/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(loginReuest)
+                body: JSON.stringify(loginRequest),
             });
-
-            console.log(response);
-
-            if(response.ok){
-                const user = await response.json();
+    
+                if (response.status === 200) {
+                const user = await response.json(); 
                 const userId = user.id;
-                navigate(`/account/${userId}`)
+                navigate(`/account/${userId}/courses`); 
+            } else if (response.status === 404) {
+                setError('No account found with this email address.');
+            } else if (response.status === 401) {
+                setError('Incorrect password. Please try again.');
+            } else if (response.status === 500) {
+                setError('An unexpected error occurred on the server.');
+            } else {
+                setError('An unknown error occurred.');
             }
-        }catch(err){
-            setError('Network error or server not responding.', err)
+        } catch (err) {
+            console.error('Error:', err);
+            setError('Network error or server not responding.');
         }
-
-    }
+    };
 
     return (
         <Container fluid className="vh-100 d-flex align-items-center">
@@ -132,9 +139,9 @@ export default function LoginForm() {
                     </Button>
                     <Button
                         variant="primary"
-                        onClick={() => handleRoleSelection('teacher')}
+                        onClick={() => handleRoleSelection('professor')}
                     >
-                        Teacher
+                        Professor
                     </Button>
                     <Button
                         variant="secondary"
