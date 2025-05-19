@@ -32,4 +32,8 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 //            @Param("deadline") Date deadline
 //    );
 
+    @Query("SELECT COUNT(e) FROM Enrollment e WHERE e.course.id = :courseId")
+    int countEnrollmentsByCourseId(@Param("courseId") Long courseId);
+
+
 }

@@ -33,11 +33,11 @@ public class UserService {
         return user;
     }
 
-    public void signup(User user) throws LearnLoopException {
+    public User signup(User user) throws LearnLoopException {
         if (userRepository.findByEmail(user.getEmail()) != null) {
             throw new LearnLoopException("User with this email already exists.");
         }
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
 }

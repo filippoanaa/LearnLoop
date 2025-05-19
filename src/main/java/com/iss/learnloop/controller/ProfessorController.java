@@ -1,5 +1,6 @@
 package com.iss.learnloop.controller;
 
+import com.iss.learnloop.dto.CourseDetails;
 import com.iss.learnloop.exception.LearnLoopException;
 import com.iss.learnloop.model.Course;
 import com.iss.learnloop.model.Professor;
@@ -9,10 +10,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("professors/")
+@RequestMapping("professors")
 public class ProfessorController {
     private final ProfessorService professorService;
 
@@ -21,13 +23,13 @@ public class ProfessorController {
         this.professorService = professorService;
     }
 
-    @GetMapping("{professorId}")
+    @GetMapping("/{professorId}/courses")
     public ResponseEntity<?> getProfessorsCourses(@PathVariable long professorId) {
-        List<Course> courses = professorService.getProfessorsCourses(professorId);
-        return ResponseEntity.ok(courses);
+        List<CourseDetails> courseDetails = professorService.getProfessorsCoursesDetails(professorId);
+        return ResponseEntity.ok().body(courseDetails);
     }
 
-    @PostMapping("{professorId}")
+    @PostMapping("/{professorId}/courses")
     public ResponseEntity<?> addCourseToProfessor(@PathVariable long professorId, @RequestBody Course course) {
         try{
             professorService.addCourseForProfessor(professorId, course);
@@ -38,7 +40,7 @@ public class ProfessorController {
         }
     }
 
-    @DeleteMapping("{professorId}/{courseId}")
+    @DeleteMapping("/{professorId}/courses/{courseId}")
     public ResponseEntity<?> removeCourseFromProfessor(@PathVariable long professorId, @PathVariable long courseId) {
         try{
             professorService.removeCourseForProfessor(professorId, courseId);
@@ -51,11 +53,17 @@ public class ProfessorController {
         }
     }
 
-    @PutMapping("{professorId}")
-    public ResponseEntity<?> updateCourse(@PathVariable long professorId, @RequestBody Course course) {
+    @PutMapping("/{professorId}/courses/{courseId}")
+    public ResponseEntity<?> updateCourse(@PathVariable long professorId, @PathVariable long courseId, @RequestBody Course course) {
         try{
-            professorService.updateCourseForProfessor(professorId, course);
-            return ResponseEntity.ok("Course updated successfully.");
+            System.out.println("Id primit de la curs: " +  courseId);
+            course.setId(courseId);
+            System.out.println("Am apelat updatee cu id ul cursului: " + course.getId());
+
+            Course updatedCourse = professorService.updateCourseForProfessor(professorId, courseId, course);
+
+            // baiul ii aici, imi da exceptie metoda de mai sus ca are cursul id ul 0!!!
+            return ResponseEntity.ok(updatedCourse);
         }catch (LearnLoopException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }

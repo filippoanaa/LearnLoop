@@ -24,19 +24,28 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @GetMapping("/{studentId}/enrolledCourses")
-    public ResponseEntity<?> getEnrollments(@PathVariable long studentId) {
-        List<Enrollment> enrollments = studentService.getEnrolledCourses(studentId);
-        return ResponseEntity.ok().body(enrollments);
+    @GetMapping("/{studentId}/courses")
+    public ResponseEntity<?> getCourses(
+            @PathVariable long studentId,
+            @RequestParam(value = "coursesType", required = false) String filter) {
+        try {
+            System.out.println("Received request for studentId: " + studentId + ", coursesType: " + filter);
+
+            if ("enrolledCourses".equalsIgnoreCase(filter)) {
+                List<Course> enrolledCourses = studentService.getEnrolledCourses(studentId);
+                return ResponseEntity.ok(enrolledCourses);
+            } else if ("availableCourses".equalsIgnoreCase(filter)) {
+                List<Course> availableCourses = studentService.getStudentAvailableCourses(studentId);
+                return ResponseEntity.ok(availableCourses);
+            } else {
+                return ResponseEntity.badRequest().body("Invalid filter parameter.");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("An error occurred: " + e.getMessage());
+        }
     }
 
-    @GetMapping("/availableCourses")
-    public ResponseEntity<?> getAvailableCourses() {
-        List<Course> availableCourses = studentService.getAvailableCourses();
-        return ResponseEntity.ok().body(availableCourses);
-    }
-
-    @PostMapping("{studentId}/{courseId}")
+    @PostMapping("{studentId}/courses/{courseId}")
     public ResponseEntity<?> joinCourse(@PathVariable long studentId, @PathVariable long courseId) {
         try{
             studentService.joinCourse(studentId, courseId);
@@ -47,7 +56,7 @@ public class StudentController {
     }
 
 
-    @DeleteMapping("/{studentId}/enrolledCourses/{courseId}")
+    @DeleteMapping("/{studentId}/courses/{courseId}")
     public ResponseEntity<?> dropCourse(@PathVariable long studentId, @PathVariable long courseId) {
         try{
             studentService.dropCourse(studentId, courseId);

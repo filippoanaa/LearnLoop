@@ -16,15 +16,21 @@
     }
 }
 
+.btn{
+    font-weight: bold;
+    font-size: 18px; 
+
+
+}
 
 .btn-primary {
     background-color: #c69f89; 
     color: #ffffff; 
     border: none;
     border-radius: 8px; 
-    padding: 10px 20px;
+    font-size: 18px; 
+    font-weight: bold;
     cursor: pointer;
-    font-size: 16px;
 }
 
 .btn-primary:hover {
@@ -32,11 +38,27 @@
 }
 
 .bg-primary {
-    background-color: #c69f89 !important; /* Mocha-inspired background */
-    color: #ffffff !important; /* White text */
-    text-align: center; /* Aliniere centrală */
-    border-radius: 8px 8px 0 0; /* Colțuri rotunjite pentru compatibilitate cu cardul */
-    padding: 15px; /* Spațiu pentru un aspect mai aerisit */
-    font-size: 20px; /* Mărime font mai mare pentru titlu */
+    background-color: #c69f89 !important; 
+    color: #ffffff !important;
+    text-align: center; 
+    border-radius: 8px 8px 0 0; 
+    padding: 15px;
 }
 
+body {
+    background:#f0e0d8;
+    color: #331a00;
+    margin: 0;
+    padding: 0;
+}
+
+form label {
+    font-weight: bold;
+    color: #5a3e2b;
+
+}
+
+card text{
+    color: #5a3e2b;
+    font-weight: bold;
+}

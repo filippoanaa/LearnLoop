@@ -3,12 +3,14 @@ import { Alert, Container, Row, Col, Card, Form, Button } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom';
 import './customStyle.css'
 
-const SignUpStudentForm = () => {
+const SignUpProfessorForm = () => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [dateOfBirth, setDateOfBirth] = useState('');
-    const [educationLevel, setEducationLevel] = useState('');
-    const [schoolName, setSchoolName] = useState('');
+    const [currentPosition, setCurrentPosition] = useState('');
+    const [experienceYears, setExperienceYears] = useState('');
+    const [instituteName, setInstituteName] = useState('');
+    const [expertiseDomains, setExpertiseDomains] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
@@ -17,7 +19,7 @@ const SignUpStudentForm = () => {
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
-        if (!firstName || !lastName || !dateOfBirth || !educationLevel || !schoolName || !email || !password || !passwordConfirmation) {
+        if (!firstName || !lastName || !dateOfBirth || !currentPosition || !instituteName || !expertiseDomains || !email || !password || !passwordConfirmation) {
             e.preventDefault();
             setError('All fields must be completed.');
             return;
@@ -30,13 +32,17 @@ const SignUpStudentForm = () => {
             return;
         }
     
-        const studentData = {
-            userType: "student",
+        const expertiseDomainsArray = expertiseDomains.split(',').map((domain) => domain.trim());
+
+        const professorData = {
+            userType: "professor",
             firstName,
             lastName,
             dateOfBirth,
-            educationLevel,
-            schoolName,
+            currentPosition,
+            experienceYears,
+            instituteName,
+            expertiseDomains : expertiseDomainsArray,
             email,
             password,
         };
@@ -47,12 +53,12 @@ const SignUpStudentForm = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(studentData)
+                body: JSON.stringify(professorData)
             });
     
             if (response.status == 201) {
-                const createdStudent = await response.json();
-                navigate(`/account/student/${createdStudent.id}/courses`);
+                const createdProfessor = await response.json();
+                navigate(`/acount/professor/${createdProfessor.id}/courses`);
             } else {
                 const errorData = await response.json();
                 setError(errorData.message || 'Signup failed.');
@@ -107,30 +113,53 @@ const SignUpStudentForm = () => {
 
 
                                     <Form.Group className="mb-3">
-                                        <Form.Label>Education Level</Form.Label>
+                                        <Form.Label>Current Position</Form.Label>
                                         <Form.Select
-                                            value={educationLevel}
-                                            onChange={(e) => setEducationLevel(e.target.value)}
+                                            value={currentPosition}
+                                            onChange={(e) => setCurrentPosition(e.target.value)}
                                         >
-                                            <option value="">Select Education Level</option>
-                                            <option value="preSchool">Pre-School</option>
-                                            <option value="primarySchool">Primary School</option>
-                                            <option value="middleSchool">Middle School</option>
-                                            <option value="highSchool">High School</option>
-                                            <option value="bachelorsDegree">Bachelor's Degree</option>
-                                            <option value="mastersDegree">Master's Degree</option>
-                                            <option value="phd">PhD</option>
+                                            <option value="">Select Current Position</option>
+                                            <option value="univeristyProfessor">Pre-School Professor</option>
+                                            <option value="highSchoolProfessor">High School Professor</option>
+                                            <option value="middleSchoolProfessor">Middle School Professor</option>
+                                            <option value="primarySchoolProfessor">Primary School Professor</option>
+                                            <option value="preSchoolProfessor">Pre-School Professor</option>
+                                            <option value="independentProfessor">Independent professor</option>
                                             <option value="other">Other</option>
                                         </Form.Select>
                                     </Form.Group>
-
+                                    
                                     <Form.Group className="mb-3">
-                                        <Form.Label>School name</Form.Label>
+                                        <Form.Label>Experience Years</Form.Label>
                                         <Form.Control
                                             type="text"
-                                            placeholder="Enter school name"
-                                            value={schoolName}
-                                            onChange={(e) => setSchoolName(e.target.value)}
+                                            placeholder="Enter experience years"
+                                            value={experienceYears}
+                                            onChange={(e) => setExperienceYears(e.target.value)}
+                                        >
+                                            
+                                        </Form.Control>
+                                    </Form.Group>
+
+
+
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Institute name</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Enter institute name"
+                                            value={instituteName}
+                                            onChange={(e) => setInstituteName(e.target.value)}
+                                        />
+                                    </Form.Group>
+
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Expertise Domains</Form.Label>
+                                        <Form.Control
+                                            as="textarea"
+                                            placeholder="Enter expertise domains separated by commas (e.g., Mathematics, Physics)"
+                                            value={expertiseDomains}
+                                            onChange={(e) => setExpertiseDomains(e.target.value)}
                                         />
                                     </Form.Group>
 
@@ -182,4 +211,4 @@ const SignUpStudentForm = () => {
     )
 }
 
-export default SignUpStudentForm
+export default SignUpProfessorForm

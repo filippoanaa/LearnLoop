@@ -16,8 +16,6 @@ public class Professor extends User{
     @ElementCollection
     private List<String> expertiseDomains;
 
-    @OneToMany(mappedBy = "professor", cascade = CascadeType.ALL)
-    private Set<Course> courses;
 
     public Professor() {}
     public Professor(Position currentPosition, String institute, int experienceYears, List<String> expertiseDomains) {
@@ -25,7 +23,6 @@ public class Professor extends User{
         this.institute = institute;
         this.experienceYears = experienceYears;
         this.expertiseDomains = expertiseDomains;
-        this.courses = new HashSet<>();
     }
 
     public Position getCurrentPosition() {

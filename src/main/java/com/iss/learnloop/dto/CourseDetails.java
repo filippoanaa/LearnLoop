@@ -1,16 +1,9 @@
-package com.iss.learnloop.model;
-
-import jakarta.persistence.*;
+package com.iss.learnloop.dto;
 
 import java.sql.Time;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
-@Entity
-public class Course {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CourseDetails {
     private long id;
     private String title;
     private String description;
@@ -18,22 +11,28 @@ public class Course {
     private String duration;
     private int maximumNumberOfStudents;
     private Date applicationDeadline;
+    private int numberOfEnrollments;
     private long professorId;
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
-    private Set<Enrollment> enrollments;
 
-
-    public Course() {}
-
-    public Course(String title, String description, Date startDate, String duration, int maximumNumberOfStudents, Date applicationDeadline) {
+    public CourseDetails(long id, long professorId, String title, String description, Date startDate, String duration, Date applicationDeadline, int maximumNumberOfStudents, int numberOfEnrollments) {
+        this.id = id;
+        this.professorId = professorId;
         this.title = title;
         this.description = description;
         this.startDate = startDate;
         this.duration = duration;
-        this.maximumNumberOfStudents = maximumNumberOfStudents;
         this.applicationDeadline = applicationDeadline;
-        this.enrollments = new HashSet<Enrollment>();
+        this.maximumNumberOfStudents = maximumNumberOfStudents;
+        this.numberOfEnrollments = numberOfEnrollments;
+    }
+
+    public long getProfessorId() {
+        return professorId;
+    }
+
+    public void setProfessorId(long professorId) {
+        this.professorId = professorId;
     }
 
     public long getId() {
@@ -92,11 +91,11 @@ public class Course {
         this.applicationDeadline = applicationDeadline;
     }
 
-    public long getProfessorId() {
-        return professorId;
+    public int getNumberOfEnrollments() {
+        return numberOfEnrollments;
     }
 
-    public void setProfessor(long professorId) {
-        this.professorId = professorId;
+    public void setNumberOfEnrollments(int numberOfEnrollments) {
+        this.numberOfEnrollments = numberOfEnrollments;
     }
 }

@@ -11,6 +11,7 @@ import com.iss.learnloop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,12 +27,25 @@ public class StudentService {
         this.enrollmentRepository = enrollmentRepository;
     }
 
-    public List<Enrollment> getEnrolledCourses(Long id){
-        return enrollmentRepository.findByStudentId(id);
+    public List<Course> getEnrolledCourses(Long id){
+        List<Enrollment> enrollments =  enrollmentRepository.findByStudentId(id);
+        List<Course> enrolledCourses = new ArrayList<>();
+        enrollments.stream().forEach(enrollment -> {
+            enrolledCourses.add(enrollment.getCourse());
+        });
+        return enrolledCourses;
     }
 
-    public List<Course> getAvailableCourses(){
-        return courseRepository.findAll();
+    public List<Course> getStudentAvailableCourses(long studentId){
+        List<Course> courses = courseRepository.findAll();
+        List<Course> availableCourses = new ArrayList<>();
+        courses.forEach(course -> {
+            Enrollment enrollment = enrollmentRepository.findByStudentIdAndCourseId(studentId, course.getId());
+            if(enrollment == null){
+                availableCourses.add(course);
+            }
+        });
+        return availableCourses;
     }
 
 
@@ -44,6 +58,7 @@ public class StudentService {
     }
 
     public void joinCourse(long studentId, long courseId) throws LearnLoopException {
+        System.out.println("Incerc sa dau join la curs");
         Course course = courseRepository.findById(courseId).orElseThrow(() -> new LearnLoopException("Course not found."));
 
         Student student = studentRepository.findById(studentId).orElseThrow(() -> new LearnLoopException("Student not found."));
@@ -53,6 +68,7 @@ public class StudentService {
             throw new LearnLoopException("Enrollment already exists");
         }
         Enrollment enrollment = new Enrollment(student, course);
+
         enrollmentRepository.save(enrollment);
 
     }

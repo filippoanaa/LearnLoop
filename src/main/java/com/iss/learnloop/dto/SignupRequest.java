@@ -2,6 +2,8 @@ package com.iss.learnloop.dto;
 
 import com.iss.learnloop.model.EducationLevel;
 import com.iss.learnloop.model.Position;
+import com.iss.learnloop.model.Student;
+import com.iss.learnloop.model.Professor;
 import jakarta.persistence.Column;
 import jakarta.persistence.Lob;
 
@@ -15,7 +17,6 @@ public class SignupRequest {
     private String lastName;
     private Date dateOfBirth;
     private String email;
-    private String phoneNumber;
     private String password;
 
     //students
@@ -66,14 +67,6 @@ public class SignupRequest {
 
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 
     public String getPassword() {
@@ -130,5 +123,33 @@ public class SignupRequest {
 
     public void setExpertiseDomains(List<String> expertiseDomains) {
         this.expertiseDomains = expertiseDomains;
+    }
+
+
+
+    public Student getStudentFromRequest() {
+        Student student = new Student();
+        student.setFirstName(this.firstName);
+        student.setLastName(this.lastName);
+        student.setDateOfBirth(this.dateOfBirth);
+        student.setEmail(this.email);
+        student.setPassword(this.password);
+        student.setLevelOfEducation(this.levelOfEducation);
+        student.setSchoolName(this.schoolName);
+        return student;
+    }
+
+    public Professor getProfessorFromRequest() {
+        Professor professor = new Professor();
+        professor.setFirstName(this.firstName);
+        professor.setLastName(this.lastName);
+        professor.setDateOfBirth(this.dateOfBirth);
+        professor.setEmail(this.email);
+        professor.setPassword(this.password);
+        professor.setCurrentPosition(this.currentPosition);
+        professor.setExperienceYears(this.experienceYears);
+        professor.setInstitute(this.institute);
+        professor.setExpertiseDomains(this.expertiseDomains);
+        return professor;
     }
 }
