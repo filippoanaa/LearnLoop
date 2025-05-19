@@ -42,7 +42,7 @@ const SignUpStudentForm = () => {
         };
     
         try {
-            const response = await fetch('http://localhost:8080/users', {
+            const response = await fetch('http://localhost:8080/authentication/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ const SignUpStudentForm = () => {
     
             if (response.status == 201) {
                 const createdStudent = await response.json();
-                navigate(`/account/student/${createdStudent.id}/courses`);
+                navigate(`/account/${createdStudent.id}`);
             } else {
                 const errorData = await response.json();
                 setError(errorData.message || 'Signup failed.');
@@ -168,7 +168,7 @@ const SignUpStudentForm = () => {
                                     <Button type="submit" className="w-100" variant="success">
                                         Sign up
                                     </Button>
-                                    <Link to="/login" className="btn btn-danger w-100 mt-2">
+                                    <Link to="/" className="btn btn-danger w-100 mt-2">
                                         Cancel
                                     </Link>
                                 </Form>
