@@ -53,19 +53,6 @@ const CoursesList = ({ courses, role, userId, coursesType, onCourseAction }) => 
                     )}
                 </div>
             );
-        }else if (role === "professor"){
-            console.log("Rendering Update button for course:", course.title);
-            return(
-                <Link to={`/account/${role}/${userId}/courses/${course.id}/courseForm`}>
-                <Button
-                    variant="danger"
-                    onClick={() => onCourseAction("update", course.id)}
-                >
-                Update
-                </Button>
-                </Link>
-            )
-
         }
 
         return null;

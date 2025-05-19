@@ -26,7 +26,7 @@ const CourseForm = () => {
                     const response = await fetch(`http://localhost:8080/courses/${courseId}`);
                     if (response.ok) {
                         const data = await response.json();
-                        // Populate form fields with existing course data
+
                         setTitle(data.title || '');
                         setDescription(data.description || '');
                         setDuration(data.duration || '');
@@ -69,10 +69,10 @@ const CourseForm = () => {
 
         try {
             const url = courseId
-                ? `http://localhost:8080/professors/${professorId}/courses/${courseId}` // Endpoint pentru actualizare
-                : `http://localhost:8080/professors/${professorId}/courses`; // Endpoint pentru creare
+                ? `http://localhost:8080/professors/${professorId}/courses/${courseId}` 
+                : `http://localhost:8080/professors/${professorId}/courses`; 
 
-            const method = courseId ? 'PUT' : 'POST'; // Folosește PUT pentru actualizare și POST pentru creare
+            const method = courseId ? 'PUT' : 'POST'; 
             console.log("Metoda: " + method);
 
             const response = await fetch(url, {
@@ -85,7 +85,7 @@ const CourseForm = () => {
                 throw new Error('Failed to submit the course.');
             }
 
-            navigate(`/account/professor/${professorId}/courses`);
+            navigate(`/account/${role}/${professorId}/courses`);
         } catch (err) {
             setError('Failed to submit the course. Please try again.');
         }
@@ -132,6 +132,15 @@ const CourseForm = () => {
                                     </Form.Group>
 
                                     <Form.Group className="mb-3">
+                                        <Form.Label>Application Deadline</Form.Label>
+                                        <Form.Control
+                                            type="date"
+                                            value={applicationDeadline}
+                                            onChange={(e) => setApplicationDeadline(e.target.value)}
+                                        />
+                                    </Form.Group>
+
+                                    <Form.Group className="mb-3">
                                         <Form.Label>Duration (days)</Form.Label>
                                         <Form.Control
                                             type="number"
@@ -151,14 +160,7 @@ const CourseForm = () => {
                                         />
                                     </Form.Group>
 
-                                    <Form.Group className="mb-3">
-                                        <Form.Label>Application Deadline</Form.Label>
-                                        <Form.Control
-                                            type="date"
-                                            value={applicationDeadline}
-                                            onChange={(e) => setApplicationDeadline(e.target.value)}
-                                        />
-                                    </Form.Group>
+                                    
 
                                     <Button type="submit" className="w-100" variant="success">
                                         {courseId ? 'Update Course' : 'Create Course'}

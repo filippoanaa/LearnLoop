@@ -34,8 +34,11 @@ const ProfessorCourses = () => {
     const handleOnCourseAction = async (courseAction, courseId) => {
         var url = '';
 
-        if(courseAction === 'update' || courseAction === 'add'){
-            navigate(`/account/${role}/${professorId}/courses/${courseId}/courseForm`);
+        if(courseAction === 'update'){
+            navigate(`/account/professor/${professorId}/courses/${courseId}/edit-course`);
+        }
+        else if(courseAction === 'add'){
+             navigate(`/account/professor/${professorId}/courses/${courseId}/add-course`)
         }
         else{
             url = `http://localhost:8080/professors/${professorId}/courses/${courseId}`;
@@ -69,7 +72,7 @@ const ProfessorCourses = () => {
 
             {error && <p style={{ color: 'red' }}>{error}</p>}
             
-                <Link to={`/account/${role}/${professorId}/courses/courseForm`}>
+                <Link to={`/account/professor/${professorId}/courses/add-course`}>
                     <Button variant="success" size="lg">
                         Add new course
                     </Button>
