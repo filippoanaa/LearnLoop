@@ -48,7 +48,7 @@ const SignUpProfessorForm = () => {
         };
     
         try {
-            const response = await fetch('http://localhost:8080/users', {
+            const response = await fetch('http://localhost:8080/users/newAccount', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -85,7 +85,7 @@ const CourseForm = () => {
                 throw new Error('Failed to submit the course.');
             }
 
-            navigate(`/account/${role}/${professorId}/courses`);
+            navigate(`/account/professor/${professorId}/courses`);
         } catch (err) {
             setError('Failed to submit the course. Please try again.');
         }
@@ -164,6 +164,7 @@ const CourseForm = () => {
 
                                     <Button type="submit" className="w-100" variant="success">
                                         {courseId ? 'Update Course' : 'Create Course'}
+
                                     </Button>
 
                                     <Button

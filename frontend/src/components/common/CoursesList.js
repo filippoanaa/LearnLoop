@@ -61,7 +61,7 @@ const CoursesList = ({ courses, role, userId, coursesType, onCourseAction }) => 
     return (
         <div>
             {courses.map((course) => {
-                console.log("Course ID for URL:", course.id); // Log aici, înainte de returnarea JSX
+                console.log("Course ID for URL:", course.id); 
                 return (
                     <Card key={course.id} className="mb-3">
                         <Card.Header as="h5">{course.title}</Card.Header>

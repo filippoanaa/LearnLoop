@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
 import Navbar from './components/common/Navbar';
@@ -20,10 +19,10 @@ function App() {
 
         <Route path="/account/:role/:userId/courses/:courseId" element={<CourseDetails />} />
 
-        <Route path= "/account/:professor/:professorId/courses/:courseId/courseForm" element={<CourseForm/>} />
-        <Route path="/account/:professor/:professorId/courses/courseForm" element={<CourseForm />} />
+        <Route path= "/account/professor/:professorId/courses/:courseId/edit-course" element={<CourseForm/>} />
+        <Route path="/account/professor/:professorId/courses/add-course" element={<CourseForm />} />
 
-        <Route path = "/account/:professor/:professorId/courses" element = {<ProfessorCourses/>}/>
+        <Route path = "/account/professor/:professorId/courses" element = {<ProfessorCourses/>}/>
 
         //!!nu merge formul de adaugare curs
         <Route path="/account/student/:studentId/courses" element={<StudentCourses/>} />

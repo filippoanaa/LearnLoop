@@ -35,7 +35,7 @@ export default function LoginForm() {
         const loginRequest = { email, password };
     
         try {
-            const response = await fetch('http://localhost:8080/users/login', {
+            const response = await fetch('http://localhost:8080/users', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

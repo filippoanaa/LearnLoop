@@ -34,7 +34,7 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    @PostMapping("/login")
+    @PostMapping
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         try {
             System.out.println("Ajunge cererea in controller");
@@ -54,7 +54,7 @@ public class UserController {
         }
     }
 
-    @PostMapping
+    @PostMapping("/newAccount")
     public ResponseEntity<?> signup(@RequestBody SignupRequest signupRequest) {
         try {
             User createdUser;
